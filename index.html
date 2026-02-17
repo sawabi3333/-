@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تهنئة رمضان كريم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      padding: 40px;
+      border-radius: 25px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      animation: fadeIn 2s ease;
+      max-width: 400px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #ffd700;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 25px;
+      line-height: 1.8;
+    }
+
+    button {
+      background: #ffd700;
+      color: #000;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: #ffea00;
+    }
+
+    .moon {
+      position: absolute;
+      top: 60px;
+      right: 80px;
+      width: 80px;
+      height: 80px;
+      background: #ffd700;
+      border-radius: 50%;
+      box-shadow: -15px 0 0 10px #0f2027;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .stars span {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.2; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="moon"></div>
+
+  <div class="stars" id="stars"></div>
+
+  <div class="card">
+    <h1>رمضان كريم يا ولاء 💜🪻 🌙</h1>
+    <p>
+      كل عام وأنتِ بخير يا ولاء، نسأل الله أن يملأ قلبكِ بالسكينة وأن يبارك لكِ في هذا الشهر الفضيل.
+    </p>
+    <button onclick="showMessage()">اضغط للتهنئة</button>
+  </div>
+
+  <script>
+    function showMessage() {
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100%';
+      overlay.style.height = '100%';
+      overlay.style.background = 'rgba(0,0,0,0.6)';
+      overlay.style.display = 'flex';
+      overlay.style.alignItems = 'center';
+      overlay.style.justifyContent = 'center';
+      overlay.style.zIndex = '9999';
+
+      const card = document.createElement('div');
+      card.style.background = '#fff';
+      card.style.color = '#000';
+      card.style.padding = '30px';
+      card.style.borderRadius = '20px';
+      card.style.textAlign = 'center';
+      card.style.maxWidth = '300px';
+      card.style.animation = 'fadeIn 0.8s ease';
+
+      const text = document.createElement('p');
+      text.innerText = 'تقبل الله منا ومنكم صالح الأعمال 🌙✨
+أول رمضان مع بعض وبإذن الله لآخر العمر 💜💜';
+
+      const closeBtn = document.createElement('button');
+      closeBtn.innerText = 'إغلاق';
+      closeBtn.style.marginTop = '15px';
+      closeBtn.onclick = () => document.body.removeChild(overlay);
+
+      // قلوب ونجوم متحركة
+      for (let i = 0; i < 25; i++) {
+        const star = document.createElement('div');
+        star.innerText = i % 2 === 0 ? '💜' : '✨';
+        star.style.position = 'fixed';
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.top = Math.random() * 100 + 'vh';
+        star.style.fontSize = '22px';
+        star.style.animation = 'fadeOut 2s forwards';
+        overlay.appendChild(star);
+      }
+
+      card.appendChild(text);
+      card.appendChild(closeBtn);
+      overlay.appendChild(card);
+      document.body.appendChild(overlay);
+    }
+
+    // إنشاء نجوم عشوائية
+    const starsContainer = document.getElementById("stars");
+    for (let i = 0; i < 40; i++) {
+      const star = document.createElement("span");
+      star.style.top = Math.random() * 100 + "vh";
+      star.style.left = Math.random() * 100 + "vw";
+      star.style.animationDuration = (Math.random() * 2 + 1) + "s";
+      starsContainer.appendChild(star);
+    }
+  </script>
+
+  
+
+  
+
+  <!-- قسم الألعاب الرمضانية -->
+  <div style="position:absolute; top:20px; left:20px; background:rgba(255,255,255,0.1); padding:15px; border-radius:15px; backdrop-filter:blur(8px); max-width:260px;">
+    <h3 style="margin-bottom:10px; color:#ffd700;">🎮 ألعاب رمضانية لولاء مصطفى</h3>
+    <p id="quizQuestion">اضغط لبدء سؤال رمضاني</p>
+    <button onclick="newQuestion()">سؤال جديد</button>
+    <button onclick="guessNumber()">لعبة تخمين الرقم</button>
+  </div>
+
+  <script>
+    const questions = [
+      { q: 'في أي شهر نزل القرآن؟', a: 'رمضان' },
+      { q: 'كم عدد أركان الإسلام؟', a: '5' },
+      { q: 'ما اسم ليلة خير من ألف شهر؟', a: 'ليلة القدر' }
+    ];
+
+    function newQuestion() {
+      const random = questions[Math.floor(Math.random() * questions.length)];
+      const userAnswer = prompt(random.q);
+      if (!userAnswer) return;
+      if (userAnswer.trim() === random.a) {
+        alert('إجابة صحيحة 🌙✨');
+      } else {
+        alert('إجابة خاطئة، الصحيحة هي: ' + random.a);
+      }
+    }
+
+    function guessNumber() {
+      const number = Math.floor(Math.random() * 5) + 1;
+      const guess = prompt('خمن رقم من 1 إلى 5');
+      if (!guess) return;
+      if (parseInt(guess) === number) {
+        alert('مبروك! خمنت صح 🎉');
+      } else {
+        alert('حظ أوفر! الرقم كان ' + number);
+      }
+    }
+  </script>
+
+  <!-- فوازير رمضان -->
+  <div style="position:absolute; bottom:20px; right:20px; background:rgba(255,255,255,0.1); padding:15px; border-radius:15px; backdrop-filter:blur(8px); max-width:260px;">
+    <h3 style="margin-bottom:10px; color:#ffd700;">🧩 فوازير رمضان</h3>
+    <button onclick="ramadanRiddle()">ابدأ فزورة</button>
+  </div>
+
+  <script>
+    let score = 0;
+    const scoreDisplay = document.createElement('p');
+    scoreDisplay.innerText = 'النقاط: 0';
+    scoreDisplay.style.marginTop = '10px';
+    document.body.appendChild(scoreDisplay);
+
+    const riddles = [
+      { q: 'شيء نراه في السماء ليلًا ويختفي نهارًا، ما هو؟', a: 'القمر' },
+      { q: 'مدينة يقصدها المسلمون للحج؟', a: 'مكة' },
+      { q: 'أول مسجد بُني في الإسلام؟', a: 'مسجد قباء' }
+    ];
+
+    function ramadanRiddle() {
+      const r = riddles[Math.floor(Math.random() * riddles.length)];
+
+      const container = document.createElement('div');
+      container.style.position = 'fixed';
+      container.style.top = '50%';
+      container.style.left = '50%';
+      container.style.transform = 'translate(-50%, -50%)';
+      container.style.background = '#fff';
+      container.style.color = '#000';
+      container.style.padding = '20px';
+      container.style.borderRadius = '15px';
+      container.style.textAlign = 'center';
+      container.style.zIndex = '9999';
+
+      const question = document.createElement('p');
+      question.innerText = r.q;
+
+      const input = document.createElement('input');
+      input.placeholder = 'اكتب الإجابة';
+      input.style.margin = '10px';
+
+      const btn = document.createElement('button');
+      btn.innerText = 'تحقق';
+
+      btn.onclick = () => {
+        if (input.value.trim() === r.a) {
+          score++;
+          // مؤثرات نجوم احتفالية
+          for (let i = 0; i < 20; i++) {
+            const star = document.createElement('div');
+            star.innerText = '✨';
+            star.style.position = 'fixed';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.fontSize = '24px';
+            star.style.animation = 'fadeOut 1.5s forwards';
+            document.body.appendChild(star);
+            setTimeout(() => star.remove(), 1500);
+          }
+
+          alert('إجابة صحيحة يا ولاء 🌙✨');
+        } else {
+          alert('إجابة خاطئة، الحل هو: ' + r.a);
+        }
+        scoreDisplay.innerText = 'النقاط: ' + score;
+        document.body.removeChild(container);
+      };
+
+      container.appendChild(question);
+      container.appendChild(input);
+      container.appendChild(btn);
+      document.body.appendChild(container);
+    }
+  </script>
+
+</body>
+</html>
