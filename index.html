@@ -17,44 +17,63 @@ display:flex;
 align-items:center;
 justify-content:center;
 color:#fff;
-padding-bottom:90px;
 overflow:hidden;
 }
 
+/* كرت زجاجي */
 .card{
 background:rgba(255,255,255,0.08);
-backdrop-filter:blur(12px);
+backdrop-filter:blur(14px);
 padding:25px;
 border-radius:25px;
 text-align:center;
 max-width:420px;
 width:90%;
-box-shadow:0 20px 40px rgba(0,0,0,0.6);
+box-shadow:0 20px 50px rgba(0,0,0,0.7);
+animation:fadeIn 0.7s ease;
+}
+
+/* أنيميشن دخول */
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(40px) scale(.9)}
+to{opacity:1;transform:translateY(0) scale(1)}
 }
 
 h1{color:#ffd700;margin-bottom:10px}
 
+/* زر 3D */
 button{
-background:linear-gradient(#ffe066,#ffb700);
+background:linear-gradient(#b46bff,#7a2bff);
 border:none;
-padding:12px;
-border-radius:16px;
+padding:13px;
+border-radius:18px;
 margin:6px;
 width:80%;
 font-weight:bold;
 cursor:pointer;
+color:#fff;
+box-shadow:0 6px 0 #4b0fb3,0 12px 20px rgba(0,0,0,.5);
+transition:.15s;
 }
 
+button:active{
+transform:translateY(4px);
+box-shadow:0 2px 0 #4b0fb3;
+}
+
+/* شريط سفلي */
 nav{
 position:fixed;
 bottom:0;
 width:100%;
-background:#0b1622;
+background:#0b1622ee;
 display:flex;
 justify-content:space-around;
 padding:12px;
+backdrop-filter:blur(10px);
 }
 
+/* مؤثرات */
 .effects span{
 position:fixed;
 font-size:22px;
@@ -62,14 +81,36 @@ animation:fall 3s linear forwards;
 }
 
 @keyframes fall{
-from{transform:translateY(-50px);opacity:1}
-to{transform:translateY(100vh);opacity:0}
+from{transform:translateY(-50px) scale(.7);opacity:1}
+to{transform:translateY(100vh) scale(1.2);opacity:0}
+}
+
+/* شريط تقدم */
+.progress{
+height:10px;
+background:#333;
+border-radius:10px;
+margin:10px 0;
+overflow:hidden;
+}
+.progress div{
+height:100%;
+background:linear-gradient(90deg,#b46bff,#ffd700);
+width:0%;
+transition:.4s;
+}
+
+/* عداد */
+.timer{
+font-size:.9rem;
+opacity:.8;
 }
 </style>
 </head>
 
 <body>
 
+<!-- الصفحة الرئيسية -->
 <div class="card" id="home">
 <h1>رمضان كريم يا ولاء 💜🌙</h1>
 <p>تقبل الله منا ومنكم صالح الأعمال  
@@ -77,8 +118,10 @@ to{transform:translateY(100vh);opacity:0}
 <button onclick="showEffect()">اضغطي للفرحة</button>
 </div>
 
+<!-- الألعاب -->
 <div class="card" id="games" style="display:none">
 <h1>ألعاب رمضان 🎮</h1>
+
 <button onclick="ramadanQuestion()">سؤال رمضاني</button>
 <button onclick="guessNumber()">خمن الرقم</button>
 <button onclick="riddle()">فزورة</button>
@@ -87,6 +130,7 @@ to{transform:translateY(100vh);opacity:0}
 <div id="levelBox"></div>
 </div>
 
+<!-- شريط تنقل -->
 <nav>
 <button onclick="showPage('home')">الرئيسية</button>
 <button onclick="showPage('games')">الألعاب</button>
@@ -95,15 +139,19 @@ to{transform:translateY(100vh);opacity:0}
 <div class="effects" id="effects"></div>
 
 <script>
+/* انتقال بين الصفحات */
 function showPage(id){
-document.getElementById("home").style.display="none";
-document.getElementById("games").style.display="none";
+["home","games"].forEach(p=>{
+const el=document.getElementById(p);
+el.style.display="none";
+});
 document.getElementById(id).style.display="block";
 }
 
+/* مؤثرات هلال وقلوب */
 function showEffect(){
 const box=document.getElementById("effects");
-for(let i=0;i<20;i++){
+for(let i=0;i<25;i++){
 const s=document.createElement("span");
 s.innerText=Math.random()>0.5?"💜":"🌙";
 s.style.left=Math.random()*100+"vw";
@@ -120,8 +168,8 @@ const q=[
 ];
 const r=q[Math.floor(Math.random()*q.length)];
 const a=prompt(r[0]);
-if(a===r[1]){alert("صح 🌙");showEffect();}
-else alert("غلط");
+if(a===r[1]){alert("إجابة صحيحة 🌙");showEffect();}
+else alert("إجابة خاطئة");
 }
 
 /* خمن الرقم */
@@ -157,7 +205,7 @@ clearInterval(timer);
 
 if(level>questions.length){
 document.getElementById("levelBox").innerHTML=
-`<h2>مبروك يا ولاء 💜</h2>
+`<h2>🎉 مبروك يا ولاء</h2>
 <p>نقاطك: ${points}</p>`;
 showEffect();
 return;
@@ -165,18 +213,24 @@ return;
 
 time=10;
 
+const progress=((level-1)/questions.length)*100;
+
 document.getElementById("levelBox").innerHTML=
-`<p>المستوى ${level}</p>
+`
+<p>المستوى ${level}</p>
+<div class="progress"><div style="width:${progress}%"></div></div>
 <p>النقاط ${points}</p>
-<p id="timer">الوقت: ${time}</p>
+<p class="timer" id="timer">الوقت: ${time}</p>
 <p>${questions[level-1][0]}</p>
-<input id="ans">
-<br><button onclick="checkAnswer()">تأكيد</button>`;
+<input id="ans" style="padding:10px;border-radius:10px;border:none;width:90%;margin:8px">
+<br>
+<button onclick="checkAnswer()">تأكيد</button>
+`;
 
 timer=setInterval(()=>{
 time--;
 document.getElementById("timer").innerText="الوقت: "+time;
-if(time<=0){clearInterval(timer);alert("انتهى الوقت");level++;nextLevel();}
+if(time<=0){clearInterval(timer);level++;nextLevel();}
 },1000);
 }
 
