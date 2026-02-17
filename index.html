@@ -312,6 +312,66 @@
       gamesCard.appendChild(btn);
     });
 
+  
+
+    // نظام الوقت وأعلى نتيجة
+    let timeLeft = 15;
+    let timerInterval;
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timeLeft = 15;
+
+      const timerEl = document.getElementById('timer');
+      timerEl.innerText = `الوقت المتبقي: ${timeLeft} ثانية`;
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerEl.innerText = `الوقت المتبقي: ${timeLeft} ثانية`;
+
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          alert('انتهى الوقت ⏰');
+          renderGameUI();
+        }
+      }, 1000);
+    }
+
+    // حفظ أعلى نتيجة
+    function saveHighScore() {
+      const best = localStorage.getItem('ramadanHighScore') || 0;
+      if (points > best) {
+        localStorage.setItem('ramadanHighScore', points);
+      }
+    }
+
+    function getHighScore() {
+      return localStorage.getItem('ramadanHighScore') || 0;
+    }
+
+    // تعديل واجهة اللعبة لإضافة الوقت وأعلى نتيجة
+    const originalRender = renderGameUI;
+    renderGameUI = function () {
+      originalRender();
+
+      const panel = document.getElementById('levelsPanel');
+      if (!panel) return;
+
+      if (level <= levelQuestions.length) {
+        const info = document.createElement('p');
+        info.id = 'timer';
+        info.style.marginTop = '10px';
+        panel.prepend(info);
+        startTimer();
+      } else {
+        saveHighScore();
+        const best = getHighScore();
+        const bestEl = document.createElement('p');
+        bestEl.innerHTML = `🏆 أعلى نتيجة: <strong>${best}</strong>`;
+        panel.appendChild(bestEl);
+      }
+    };
+
   </script>
 
 </body>
