@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>تهنئة رمضان كريم</title>
+  <title>رمضان كريم يا ولاء</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
     * {
       margin: 0;
@@ -22,8 +24,6 @@
       color: #fff;
       padding: 20px;
       padding-bottom: 90px;
-      color: #fff;
-      padding: 20px;
     }
 
     .card {
@@ -37,7 +37,6 @@
       width: 100%;
       position: relative;
       z-index: 10;
-      width: 100%;
     }
 
     h1 {
@@ -83,6 +82,19 @@
       box-shadow: -12px 0 0 8px #0f2027;
     }
 
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px;
+      backdrop-filter: blur(10px);
+      z-index: 5;
+    }
+
     @media (max-width: 500px) {
       h1 { font-size: 1.6rem; }
       p { font-size: 1rem; }
@@ -90,12 +102,14 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="moon"></div>
 
+  <!-- الصفحة الرئيسية -->
   <div class="card" id="home">
-    <h1>رمضان كريم يا ولاء مصطفى 🌙</h1>
+    <h1>رمضان كريم يا ولاء 💜🌙</h1>
     <p>
       كل عام وأنتِ بخير يا ولاء، نسأل الله أن يملأ قلبكِ بالسكينة
       وأن يبارك لكِ في هذا الشهر الفضيل.
@@ -103,6 +117,7 @@
     <button onclick="showMessage()">اضغط للتهنئة</button>
   </div>
 
+  <!-- صفحة الألعاب -->
   <div class="card" id="games" style="display:none;">
     <h1>🎮 ألعاب رمضانية</h1>
     <button onclick="newQuestion()">سؤال رمضاني</button>
@@ -110,7 +125,8 @@
     <button onclick="ramadanRiddle()">فزورة</button>
   </div>
 
-  <nav style="position:fixed;bottom:0;left:0;width:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:space-around;padding:12px;backdrop-filter:blur(10px);z-index:5;">
+  <!-- شريط التنقل -->
+  <nav>
     <button onclick="showPage('home')">الرئيسية</button>
     <button onclick="showPage('games')">الألعاب</button>
   </nav>
@@ -144,8 +160,8 @@
       card.style.maxWidth = '300px';
 
       const text = document.createElement('p');
-      text.innerText = 'تقبل الله منا ومنكم صالح الأعمال 🌙✨
-أول رمضان مع بعض وبإذن الله لآخر العمر 💜💜';
+      text.innerText = `تقبل الله منا ومنكم صالح الأعمال 🌙✨
+أول رمضان مع بعض وبإذن الله لآخر العمر 💜💜`;
 
       const closeBtn = document.createElement('button');
       closeBtn.innerText = 'إغلاق';
@@ -176,8 +192,8 @@
     function newQuestion() {
       const random = questions[Math.floor(Math.random() * questions.length)];
       const userAnswer = prompt(random.q);
-      if (userAnswer === random.a) alert('صح 🌙');
-      else alert('غلط');
+      if (userAnswer === random.a) alert('إجابة صحيحة 🌙');
+      else alert('إجابة خاطئة');
     }
 
     function guessNumber() {
@@ -202,12 +218,6 @@
         alert('الحل: ' + r.a);
       }
     }
-  document.addEventListener('DOMContentLoaded', () => {
-      const btn = document.querySelector('#home button');
-      if (btn) {
-        btn.addEventListener('click', showMessage);
-      }
-    });
   </script>
 
 </body>
