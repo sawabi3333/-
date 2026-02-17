@@ -16,70 +16,57 @@
     }
 
     body {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background: radial-gradient(circle at top, #1a2a3a, #0b1622);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #fff;
       padding: 20px;
-      padding-bottom: 90px;
+      padding-bottom: 100px;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
+      background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+      backdrop-filter: blur(14px);
       padding: 25px;
-      border-radius: 20px;
+      border-radius: 25px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
       max-width: 420px;
       width: 100%;
       position: relative;
       z-index: 10;
+      border: 1px solid rgba(255,255,255,0.15);
     }
 
     h1 {
       font-size: 2rem;
       margin-bottom: 10px;
       color: #ffd700;
-      line-height: 1.4;
     }
 
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 20px;
-      line-height: 1.7;
-    }
+    p { line-height: 1.7; }
 
     button {
-      background: #ffd700;
+      background: linear-gradient(180deg, #ffe066, #ffb700);
       color: #000;
       border: none;
-      padding: 12px 20px;
-      border-radius: 25px;
+      padding: 14px 22px;
+      border-radius: 18px;
       font-size: 1rem;
       cursor: pointer;
-      transition: 0.3s;
-      margin: 5px;
+      margin: 8px auto;
       width: 100%;
-      max-width: 220px;
+      max-width: 240px;
+      font-weight: bold;
+      box-shadow: 0 6px 0 #cc9200, 0 12px 20px rgba(0,0,0,0.4);
+      transition: 0.15s ease;
     }
 
-    button:hover {
-      transform: scale(1.05);
-      background: #ffea00;
-    }
-
-    .moon {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      width: 60px;
-      height: 60px;
-      background: #ffd700;
-      border-radius: 50%;
-      box-shadow: -12px 0 0 8px #0f2027;
+    button:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #cc9200;
     }
 
     nav {
@@ -87,12 +74,12 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      background: rgba(0,0,0,0.6);
+      background: rgba(10,15,25,0.9);
       display: flex;
       justify-content: space-around;
-      padding: 12px;
-      backdrop-filter: blur(10px);
-      z-index: 5;
+      padding: 14px;
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
 
     .stars {
@@ -110,14 +97,22 @@
     }
 
     @keyframes fall {
-      from { transform: translateY(-50px); opacity: 1; }
-      to { transform: translateY(100vh); opacity: 0; }
+      from { transform: translateY(-40px) scale(0.8); opacity: 1; }
+      to { transform: translateY(100vh) scale(1.2); opacity: 0; }
+    }
+
+    input {
+      padding: 12px;
+      border-radius: 14px;
+      border: none;
+      width: 100%;
+      margin-top: 10px;
+      text-align: center;
+      font-size: 1rem;
     }
 
     @media (max-width: 500px) {
-      h1 { font-size: 1.6rem; }
-      p { font-size: 1rem; }
-      .card { padding: 20px; }
+      h1 { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -154,9 +149,33 @@
 
   <script>
     function showPage(id) {
-      document.getElementById('home').style.display = 'none';
-      document.getElementById('games').style.display = 'none';
-      document.getElementById(id).style.display = 'block';
+      const pages = ['home', 'games'];
+
+      pages.forEach(p => {
+        const el = document.getElementById(p);
+        if (!el) return;
+
+        el.style.transition = 'all 0.4s ease';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px) scale(0.98)';
+
+        setTimeout(() => {
+          el.style.display = 'none';
+        }, 200);
+      });
+
+      const target = document.getElementById(id);
+
+      setTimeout(() => {
+        target.style.display = 'block';
+        target.style.opacity = '0';
+        target.style.transform = 'translateY(30px) scale(0.95)';
+
+        setTimeout(() => {
+          target.style.opacity = '1';
+          target.style.transform = 'translateY(0) scale(1)';
+        }, 50);
+      }, 220);
     }
 
     function showStars() {
@@ -230,10 +249,11 @@
     let points = 0;
 
     const levelQuestions = [
-      { q: 'كم عدد أيام شهر رمضان؟', a: '30' },
-      { q: 'ما اسم صلاة الليل في رمضان؟', a: 'التراويح' },
-      { q: 'في أي ليلة نتحرى ليلة القدر غالبًا؟', a: '27' },
-      { q: 'ما اسم وجبة قبل الفجر في رمضان؟', a: 'السحور' }
+      { q: 'كم عدد أيام شهر رمضان في أغلب السنوات الهجرية؟', a: '30' },
+      { q: 'ما اسم السورة التي ذُكر فيها شهر رمضان؟', a: 'البقرة' },
+      { q: 'في أي عام فُرض صيام رمضان هجريًا؟', a: '2' },
+      { q: 'ما الليلة التي هي خير من ألف شهر؟', a: 'ليلة القدر' },
+      { q: 'كم عدد ركعات صلاة التراويح المشهورة عند أغلب المسلمين؟', a: '20' }
     ];
 
     function renderGameUI() {
