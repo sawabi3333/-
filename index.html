@@ -94,7 +94,7 @@ background:linear-gradient(90deg,#b46bff,#ffd700);
 <h1>رمضان كريم يا ولاء 💜🌙</h1>
 <p>تقبل الله منا ومنكم صالح الأعمال  
 وأول رمضان مع بعض وبإذن الله لآخر العمر 💜</p>
-<button onclick="showEffect()">اضغطي للفرحة</button>
+<button onclick="showEffect()">اضغطي هنا يا قمر💜</button>
 </div>
 
 <!-- الألعاب -->
@@ -130,7 +130,7 @@ function showEffect(){
 const box=document.getElementById("effects");
 for(let i=0;i<25;i++){
 const s=document.createElement("span");
-s.innerText=Math.random()>0.5?"💜":"🌙";
+s.innerText=Math.random()>0.5?"💜🪻💜":"🌙🌙";
 s.style.left=Math.random()*100+"vw";
 box.appendChild(s);
 setTimeout(()=>s.remove(),3000);
@@ -168,8 +168,8 @@ else alert("كان الرقم "+n);
 /* فزورة */
 function riddle(){
 const a=prompt("شيء يظهر ليلًا ويختفي نهارًا؟");
-if(a==="القمر") winMessage();
-else alert("الإجابة: القمر");
+if(a==="انا") winMessage();
+else alert("الإجابة: انتِ مش القمر 😎");
 }
 
 /* ===== لعبة المراحل ===== */
