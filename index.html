@@ -35,6 +35,9 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
       max-width: 420px;
       width: 100%;
+      position: relative;
+      z-index: 10;
+      width: 100%;
     }
 
     h1 {
@@ -107,7 +110,7 @@
     <button onclick="ramadanRiddle()">فزورة</button>
   </div>
 
-  <nav style="position:fixed;bottom:0;left:0;width:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:space-around;padding:12px;backdrop-filter:blur(10px);z-index:999;">
+  <nav style="position:fixed;bottom:0;left:0;width:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:space-around;padding:12px;backdrop-filter:blur(10px);z-index:5;">
     <button onclick="showPage('home')">الرئيسية</button>
     <button onclick="showPage('games')">الألعاب</button>
   </nav>
