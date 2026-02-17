@@ -224,6 +224,94 @@
         alert('الحل: ' + r.a);
       }
     }
+  
+    // لعبة مراحل متقدمة بالنقاط
+    let level = 1;
+    let points = 0;
+
+    const levelQuestions = [
+      { q: 'كم عدد أيام شهر رمضان؟', a: '30' },
+      { q: 'ما اسم صلاة الليل في رمضان؟', a: 'التراويح' },
+      { q: 'في أي ليلة نتحرى ليلة القدر غالبًا؟', a: '27' },
+      { q: 'ما اسم وجبة قبل الفجر في رمضان؟', a: 'السحور' }
+    ];
+
+    function renderGameUI() {
+      let panel = document.getElementById('levelsPanel');
+
+      if (!panel) {
+        panel = document.createElement('div');
+        panel.id = 'levelsPanel';
+        panel.style.marginTop = '15px';
+        panel.style.background = 'rgba(0,0,0,0.25)';
+        panel.style.padding = '15px';
+        panel.style.borderRadius = '15px';
+        document.getElementById('games').appendChild(panel);
+      }
+
+      if (level > levelQuestions.length) {
+        panel.innerHTML = `
+          <h2>🏆 مبروك خلصت اللعبة!</h2>
+          <p>مجموع نقاطك: <strong>${points}</strong></p>
+          <button onclick="restartLevelsGame()">إعادة اللعب</button>
+        `;
+        showStars();
+        return;
+      }
+
+      const current = levelQuestions[level - 1];
+
+      const progress = Math.round((level - 1) / levelQuestions.length * 100);
+
+      panel.innerHTML = `
+        <p>المستوى: ${level} / ${levelQuestions.length}</p>
+        <div style="background:#333;border-radius:10px;overflow:hidden;height:10px;margin:10px 0;">
+          <div style="width:${progress}%;background:#ffd700;height:100%;"></div>
+        </div>
+        <p>النقاط الحالية: <strong>${points}</strong></p>
+        <p style="margin-top:10px;">${current.q}</p>
+        <input id="answerInput" placeholder="اكتب الإجابة هنا" style="padding:10px;border-radius:10px;border:none;width:100%;margin-top:10px;text-align:center;" />
+        <button onclick="submitLevelAnswer()">تأكيد الإجابة</button>
+      `;
+    }
+
+    function startLevelsGame() {
+      level = 1;
+      points = 0;
+      renderGameUI();
+    }
+
+    function submitLevelAnswer() {
+      const input = document.getElementById('answerInput');
+      const answer = input.value.trim();
+      const correct = levelQuestions[level - 1].a;
+
+      if (answer === correct) {
+        points += 10;
+        showStars();
+        level++;
+      } else {
+        alert('إجابة خاطئة ❌');
+      }
+
+      renderGameUI();
+    }
+
+    function restartLevelsGame() {
+      level = 1;
+      points = 0;
+      renderGameUI();
+    }
+
+    // زر بدء اللعبة
+    window.addEventListener('DOMContentLoaded', () => {
+      const gamesCard = document.getElementById('games');
+      const btn = document.createElement('button');
+      btn.innerText = '🎯 ابدأ لعبة المراحل';
+      btn.onclick = startLevelsGame;
+      gamesCard.appendChild(btn);
+    });
+
   </script>
 
 </body>
