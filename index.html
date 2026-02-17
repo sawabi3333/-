@@ -20,7 +20,6 @@ color:#fff;
 overflow:hidden;
 }
 
-/* كرت زجاجي */
 .card{
 background:rgba(255,255,255,0.08);
 backdrop-filter:blur(14px);
@@ -30,10 +29,9 @@ text-align:center;
 max-width:420px;
 width:90%;
 box-shadow:0 20px 50px rgba(0,0,0,0.7);
-animation:fadeIn 0.7s ease;
+animation:fadeIn .7s ease;
 }
 
-/* أنيميشن دخول */
 @keyframes fadeIn{
 from{opacity:0;transform:translateY(40px) scale(.9)}
 to{opacity:1;transform:translateY(0) scale(1)}
@@ -41,7 +39,6 @@ to{opacity:1;transform:translateY(0) scale(1)}
 
 h1{color:#ffd700;margin-bottom:10px}
 
-/* زر 3D */
 button{
 background:linear-gradient(#b46bff,#7a2bff);
 border:none;
@@ -61,7 +58,6 @@ transform:translateY(4px);
 box-shadow:0 2px 0 #4b0fb3;
 }
 
-/* شريط سفلي */
 nav{
 position:fixed;
 bottom:0;
@@ -73,7 +69,6 @@ padding:12px;
 backdrop-filter:blur(10px);
 }
 
-/* مؤثرات */
 .effects span{
 position:fixed;
 font-size:22px;
@@ -85,7 +80,6 @@ from{transform:translateY(-50px) scale(.7);opacity:1}
 to{transform:translateY(100vh) scale(1.2);opacity:0}
 }
 
-/* شريط تقدم */
 .progress{
 height:10px;
 background:#333;
@@ -100,17 +94,12 @@ width:0%;
 transition:.4s;
 }
 
-/* عداد */
-.timer{
-font-size:.9rem;
-opacity:.8;
-}
+.timer{font-size:.9rem;opacity:.8}
 </style>
 </head>
 
 <body>
 
-<!-- الصفحة الرئيسية -->
 <div class="card" id="home">
 <h1>رمضان كريم يا ولاء 💜🌙</h1>
 <p>تقبل الله منا ومنكم صالح الأعمال  
@@ -118,7 +107,6 @@ opacity:.8;
 <button onclick="showEffect()">اضغطي للفرحة</button>
 </div>
 
-<!-- الألعاب -->
 <div class="card" id="games" style="display:none">
 <h1>ألعاب رمضان 🎮</h1>
 
@@ -130,7 +118,6 @@ opacity:.8;
 <div id="levelBox"></div>
 </div>
 
-<!-- شريط تنقل -->
 <nav>
 <button onclick="showPage('home')">الرئيسية</button>
 <button onclick="showPage('games')">الألعاب</button>
@@ -139,16 +126,13 @@ opacity:.8;
 <div class="effects" id="effects"></div>
 
 <script>
-/* انتقال بين الصفحات */
 function showPage(id){
 ["home","games"].forEach(p=>{
-const el=document.getElementById(p);
-el.style.display="none";
+document.getElementById(p).style.display="none";
 });
 document.getElementById(id).style.display="block";
 }
 
-/* مؤثرات هلال وقلوب */
 function showEffect(){
 const box=document.getElementById("effects");
 for(let i=0;i<25;i++){
@@ -160,40 +144,25 @@ setTimeout(()=>s.remove(),3000);
 }
 }
 
-/* سؤال رمضاني */
-function ramadanQuestion(){
-const q=[
-["في أي شهر نزل القرآن؟","رمضان"],
-["كم عدد أركان الإسلام؟","5"]
-];
-const r=q[Math.floor(Math.random()*q.length)];
-const a=prompt(r[0]);
-if(a===r[1]){alert("إجابة صحيحة 🌙");showEffect();}
-else alert("إجابة خاطئة");
+function winMessage(){
+alert("🎉 إجابة صحيحة يا ولاء 💜");
+showEffect();
 }
 
-/* خمن الرقم */
-function guessNumber(){
-const n=Math.floor(Math.random()*5)+1;
-const g=prompt("خمن رقم من 1 إلى 5");
-if(Number(g)===n){alert("مبروك 💜");showEffect();}
-else alert("كان الرقم "+n);
-}
-
-/* فزورة */
-function riddle(){
-const a=prompt("شيء يظهر ليلًا ويختفي نهارًا؟");
-if(a==="القمر"){alert("صح 🌙");showEffect();}
-else alert("الإجابة: القمر");
-}
-
-/* لعبة المراحل */
-let level=1,points=0,time=10,timer;
+/* لعبة المراحل بعد زيادة الأسئلة */
+let level=1,points=0,time=20,timer;
 
 const questions=[
 ["كم عدد أيام رمضان غالبًا؟","30"],
 ["ما الليلة خير من ألف شهر؟","ليلة القدر"],
-["كم عدد ركعات التراويح المشهورة؟","20"]
+["كم عدد ركعات التراويح المشهورة؟","20"],
+["في أي شهر هجري يأتي رمضان؟","التاسع"],
+["ما اسم السورة التي ذكر فيها رمضان؟","البقرة"],
+["كم عدد أركان الإسلام؟","5"],
+["ما أول ما نزل من القرآن؟","اقرأ"],
+["كم عدد الصلوات المفروضة؟","5"],
+["ما اسم ليلة نزول القرآن؟","ليلة القدر"],
+["ما العبادة الأساسية في رمضان؟","الصيام"]
 ];
 
 function startLevels(){
@@ -211,13 +180,13 @@ showEffect();
 return;
 }
 
-time=10;
+time=20;
 
 const progress=((level-1)/questions.length)*100;
 
 document.getElementById("levelBox").innerHTML=
 `
-<p>المستوى ${level}</p>
+<p>المستوى ${level} من ${questions.length}</p>
 <div class="progress"><div style="width:${progress}%"></div></div>
 <p>النقاط ${points}</p>
 <p class="timer" id="timer">الوقت: ${time}</p>
@@ -235,10 +204,10 @@ if(time<=0){clearInterval(timer);level++;nextLevel();}
 }
 
 function checkAnswer(){
-const val=document.getElementById("ans").value;
+const val=document.getElementById("ans").value.trim();
 if(val===questions[level-1][1]){
 points+=10;
-showEffect();
+winMessage();
 }
 level++;
 nextLevel();
