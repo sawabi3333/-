@@ -1,171 +1,196 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>لعبة رمضان</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تهنئة رمضان</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #2b1055, #7597de);
-      color: white;
-      text-align: center;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 
-    .screen {
-      display: none;
-      padding: 20px;
-      min-height: 100vh;
-    }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
 
-    .active {
-      display: block;
-      animation: fade 0.6s ease;
-    }
+body{
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  padding:20px;
+}
 
-    @keyframes fade {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
+.card{
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(12px);
+  padding:25px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  max-width:420px;
+  width:100%;
+}
 
-    button {
-      padding: 12px 20px;
-      margin: 10px;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      cursor: pointer;
-      background: #ffd700;
-      color: #000;
-      transition: 0.2s;
-    }
+h1{color:#ffd700;margin-bottom:10px}
+p{margin-bottom:20px}
 
-    button:hover { transform: scale(1.05); }
+button{
+  background:#ffd700;
+  border:none;
+  padding:12px;
+  border-radius:20px;
+  cursor:pointer;
+  margin:5px;
+  width:100%;
+  font-size:16px;
+}
 
-    input {
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      margin-top: 10px;
-      width: 200px;
-      text-align: center;
-    }
+button:hover{transform:scale(1.05)}
 
-    #stars {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-
-    .star {
-      position: absolute;
-      font-size: 24px;
-      animation: fall 2s linear forwards;
-    }
-
-    @keyframes fall {
-      from { transform: translateY(-10vh); opacity: 1; }
-      to { transform: translateY(100vh); opacity: 0; }
-    }
-  </style>
+nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:rgba(0,0,0,0.6);
+  display:flex;
+  justify-content:space-around;
+  padding:10px;
+}
+</style>
 </head>
 
 <body>
-  <div id="stars"></div>
 
-  <!-- الشاشة الرئيسية -->
-  <div id="home" class="screen active">
-    <h1>🌙 لعبة رمضان</h1>
-    <p>أول رمضان مع بعض… تقبل الله منا ومنكم 💜</p>
-    <button onclick="startGame(); showScreen('game')">ابدأ اللعب</button>
-  </div>
+<!-- الصفحة الرئيسية -->
+<div class="card" id="home">
+  <h1>رمضان كريم يا ولاء 💜</h1>
+  <p>تقبل الله منا ومنكم صالح الأعمال 🌙<br>أول رمضان مع بعض وبإذن الله لآخر العمر 💜</p>
+  <button onclick="showPage('games')">ابدأ الألعاب 🎮</button>
+</div>
 
-  <!-- شاشة اللعبة -->
-  <div id="game" class="screen">
-    <h2>🎮 لعبة المراحل</h2>
-    <div id="levelsPanel"></div>
-    <button onclick="showScreen('home')">رجوع</button>
-  </div>
+<!-- صفحة الألعاب -->
+<div class="card" id="games" style="display:none">
+  <h1>ألعاب رمضان 🎮</h1>
 
-  <script>
-    function showScreen(id) {
-      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
+  <button onclick="startLevels()">لعبة المراحل 🏆</button>
+  <button onclick="newQuestion()">سؤال رمضاني ❓</button>
+  <button onclick="guessNumber()">تخمين الرقم 🔢</button>
+  <button onclick="ramadanRiddle()">فزورة 🧩</button>
+</div>
 
-    function showStars() {
-      const container = document.getElementById('stars');
-      container.innerHTML = '';
+<nav>
+  <button onclick="showPage('home')">الرئيسية</button>
+  <button onclick="showPage('games')">الألعاب</button>
+</nav>
 
-      for (let i = 0; i < 25; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.innerText = i % 2 === 0 ? '💜' : '✨';
-        star.style.left = Math.random() * 100 + 'vw';
-        container.appendChild(star);
-      }
+<script>
+// تغيير الصفحات
+function showPage(id){
+  document.getElementById('home').style.display='none';
+  document.getElementById('games').style.display='none';
+  document.getElementById(id).style.display='block';
+}
 
-      setTimeout(() => (container.innerHTML = ''), 2000);
-    }
+// مؤثر النجوم
+function stars(){
+  for(let i=0;i<20;i++){
+    const s=document.createElement("div");
+    s.innerText="✨";
+    s.style.position="fixed";
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=Math.random()*100+"vh";
+    s.style.fontSize="20px";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1000);
+  }
+}
 
-    let level = 1;
-    let points = 0;
+// ================= لعبة المراحل =================
+let level=0;
+let score=0;
 
-    const questions = [
-      { q: 'كم عدد أيام رمضان غالبًا؟', a: '30' },
-      { q: 'ما السورة التي ذكر فيها رمضان؟', a: 'البقرة' },
-      { q: 'في أي عام فُرض الصيام هجريًا؟', a: '2' },
-      { q: 'ما الليلة خير من ألف شهر؟', a: 'ليلة القدر' }
-    ];
+const levels=[
+  {q:"في أي شهر نزل القرآن؟",a:"رمضان"},
+  {q:"كم عدد أركان الإسلام؟",a:"5"},
+  {q:"ما هي ليلة خير من ألف شهر؟",a:"القدر"}
+];
 
-    function startGame() {
-      level = 1;
-      points = 0;
-      render();
-    }
+function startLevels(){
+  level=0;
+  score=0;
+  playLevel();
+}
 
-    function render() {
-      const panel = document.getElementById('levelsPanel');
+function playLevel(){
+  if(level>=levels.length){
+    alert("مبروك خلصت كل المراحل 🏆 مجموع نقاطك: "+score);
+    stars();
+    return;
+  }
 
-      if (level > questions.length) {
-        panel.innerHTML = `
-          <h3>🎉 مبروك!</h3>
-          <p>مجموع نقاطك: <strong>${points}</strong></p>
-          <button onclick="startGame()">إعادة اللعب</button>
-        `;
-        showStars();
-        return;
-      }
+  const answer=prompt(levels[level].q);
 
-      const current = questions[level - 1];
+  if(answer===levels[level].a){
+    score++;
+    stars();
+    alert("صح 👍");
+    level++;
+    playLevel();
+  }else{
+    alert("غلط ❌ حاول تاني");
+  }
+}
 
-      panel.innerHTML = `
-        <p>المستوى ${level} من ${questions.length}</p>
-        <p>${current.q}</p>
-        <input id="answer" placeholder="اكتب الإجابة" />
-        <br>
-        <button onclick="checkAnswer()">تأكيد</button>
-      `;
-    }
+// ================= أسئلة عشوائية =================
+const randomQuestions=[
+  {q:"كم عدد أيام شهر رمضان؟",a:"30"},
+  {q:"ما اسم صلاة الليل في رمضان؟",a:"التراويح"}
+];
 
-    function checkAnswer() {
-      const input = document.getElementById('answer');
-      const value = input.value.trim();
-      const correct = questions[level - 1].a;
+function newQuestion(){
+  const r=randomQuestions[Math.floor(Math.random()*randomQuestions.length)];
+  const user=prompt(r.q);
 
-      if (value === correct) {
-        points += 10;
-        level++;
-        showStars();
-      } else {
-        alert('إجابة خاطئة ❌');
-      }
+  if(user===r.a){
+    alert("إجابة صحيحة 🌙");
+    stars();
+  }else{
+    alert("إجابة خاطئة");
+  }
+}
 
-      render();
-    }
-  </script>
+// ================= تخمين الرقم =================
+function guessNumber(){
+  const num=Math.floor(Math.random()*5)+1;
+  const g=prompt("خمن رقم من 1 إلى 5");
+
+  if(parseInt(g)===num){
+    alert("مبروك 🎉");
+    stars();
+  }else{
+    alert("كان الرقم "+num);
+  }
+}
+
+// ================= الفوازير =================
+const riddles=[
+  {q:"شيء يظهر ليلًا ويختفي نهارًا؟",a:"القمر"},
+  {q:"بيت بلا أبواب ولا نوافذ؟",a:"البيض"}
+];
+
+function ramadanRiddle(){
+  const r=riddles[Math.floor(Math.random()*riddles.length)];
+  const ans=prompt(r.q);
+
+  if(ans===r.a){
+    alert("إجابة صحيحة ✨");
+    stars();
+  }else{
+    alert("الحل: "+r.a);
+  }
+}
+</script>
+
 </body>
 </html>
