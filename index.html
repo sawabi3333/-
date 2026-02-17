@@ -372,6 +372,112 @@
       }
     };
 
+  
+
+    // ================= تطويرات احترافية =================
+
+    // اسم اللاعب
+    let playerName = localStorage.getItem('ramadanPlayer') || '';
+
+    function askPlayerName() {
+      if (!playerName) {
+        playerName = prompt('اكتب اسمك للعب 🌙') || 'لاعب رمضان';
+        localStorage.setItem('ramadanPlayer', playerName);
+      }
+    }
+
+    // مستويات الصعوبة
+    let difficulty = 'easy';
+
+    function chooseDifficulty() {
+      const choice = prompt('اختر المستوى: سهل - متوسط - صعب');
+      if (choice === 'متوسط') difficulty = 'medium';
+      else if (choice === 'صعب') difficulty = 'hard';
+      else difficulty = 'easy';
+    }
+
+    function getTimeByDifficulty() {
+      if (difficulty === 'hard') return 7;
+      if (difficulty === 'medium') return 10;
+      return 15;
+    }
+
+    // مؤثرات صوتية بسيطة
+    const winSound = new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3');
+    const loseSound = new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_5b3c2d6c1f.mp3');
+
+    function playWin() { winSound.currentTime = 0; winSound.play(); }
+    function playLose() { loseSound.currentTime = 0; loseSound.play(); }
+
+    // إنجازات
+    function unlockAchievement(text) {
+      const a = document.createElement('div');
+      a.innerText = '🏆 ' + text;
+      a.style.position = 'fixed';
+      a.style.top = '20px';
+      a.style.left = '50%';
+      a.style.transform = 'translateX(-50%)';
+      a.style.background = '#000';
+      a.style.color = '#ffd700';
+      a.style.padding = '10px 20px';
+      a.style.borderRadius = '20px';
+      a.style.zIndex = '9999';
+      document.body.appendChild(a);
+      setTimeout(() => a.remove(), 2500);
+    }
+
+    // تعديل submit للإضافات الجديدة
+    const originalSubmit = submitLevelAnswer;
+    submitLevelAnswer = function () {
+      const input = document.getElementById('answerInput');
+      const answer = input.value.trim();
+      const correct = levelQuestions[level - 1].a;
+
+      if (answer === correct) {
+        points += 10;
+        playWin();
+        showStars();
+
+        if (level === 1) unlockAchievement('أول إجابة صحيحة!');
+
+        level++;
+      } else {
+        playLose();
+        alert('إجابة خاطئة ❌');
+      }
+
+      renderGameUI();
+    };
+
+    // تعديل بداية اللعبة
+    const originalStart = startLevelsGame;
+    startLevelsGame = function () {
+      askPlayerName();
+      chooseDifficulty();
+      timeLeft = getTimeByDifficulty();
+      originalStart();
+    };
+
+    // شاشة فوز سينمائية
+    const originalRender2 = renderGameUI;
+    renderGameUI = function () {
+      originalRender2();
+
+      const panel = document.getElementById('levelsPanel');
+      if (!panel) return;
+
+      if (level > levelQuestions.length) {
+        unlockAchievement('إنهاء جميع المراحل');
+        panel.innerHTML = `
+          <h2>🎉 مبروك يا ${playerName}!</h2>
+          <p>أنهيت كل المراحل بنجاح</p>
+          <p>مجموع نقاطك: <strong>${points}</strong></p>
+          <button onclick="restartLevelsGame()">إعادة اللعب</button>
+        `;
+        showStars();
+      }
+    };
+
   </script>
 
 </body>
