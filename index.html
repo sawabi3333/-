@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تهنئة رمضان</title>
+<title>رمضان كريم يا ولاء</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 
@@ -11,184 +11,183 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}
 
 body{
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  padding:20px;
+background: radial-gradient(circle at top,#1a2a3a,#0b1622);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#fff;
+padding-bottom:90px;
+overflow:hidden;
 }
 
 .card{
-  background:rgba(255,255,255,0.1);
-  backdrop-filter:blur(12px);
-  padding:25px;
-  border-radius:20px;
-  text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.4);
-  max-width:420px;
-  width:100%;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(12px);
+padding:25px;
+border-radius:25px;
+text-align:center;
+max-width:420px;
+width:90%;
+box-shadow:0 20px 40px rgba(0,0,0,0.6);
 }
 
 h1{color:#ffd700;margin-bottom:10px}
-p{margin-bottom:20px}
 
 button{
-  background:#ffd700;
-  border:none;
-  padding:12px;
-  border-radius:20px;
-  cursor:pointer;
-  margin:5px;
-  width:100%;
-  font-size:16px;
+background:linear-gradient(#ffe066,#ffb700);
+border:none;
+padding:12px;
+border-radius:16px;
+margin:6px;
+width:80%;
+font-weight:bold;
+cursor:pointer;
 }
 
-button:hover{transform:scale(1.05)}
-
 nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  width:100%;
-  background:rgba(0,0,0,0.6);
-  display:flex;
-  justify-content:space-around;
-  padding:10px;
+position:fixed;
+bottom:0;
+width:100%;
+background:#0b1622;
+display:flex;
+justify-content:space-around;
+padding:12px;
+}
+
+.effects span{
+position:fixed;
+font-size:22px;
+animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+from{transform:translateY(-50px);opacity:1}
+to{transform:translateY(100vh);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
-<!-- الصفحة الرئيسية -->
 <div class="card" id="home">
-  <h1>رمضان كريم يا ولاء 💜</h1>
-  <p>تقبل الله منا ومنكم صالح الأعمال 🌙<br>أول رمضان مع بعض وبإذن الله لآخر العمر 💜</p>
-  <button onclick="showPage('games')">ابدأ الألعاب 🎮</button>
+<h1>رمضان كريم يا ولاء 💜🌙</h1>
+<p>تقبل الله منا ومنكم صالح الأعمال  
+وأول رمضان مع بعض وبإذن الله لآخر العمر 💜</p>
+<button onclick="showEffect()">اضغطي للفرحة</button>
 </div>
 
-<!-- صفحة الألعاب -->
 <div class="card" id="games" style="display:none">
-  <h1>ألعاب رمضان 🎮</h1>
+<h1>ألعاب رمضان 🎮</h1>
+<button onclick="ramadanQuestion()">سؤال رمضاني</button>
+<button onclick="guessNumber()">خمن الرقم</button>
+<button onclick="riddle()">فزورة</button>
+<button onclick="startLevels()">لعبة المراحل</button>
 
-  <button onclick="startLevels()">لعبة المراحل 🏆</button>
-  <button onclick="newQuestion()">سؤال رمضاني ❓</button>
-  <button onclick="guessNumber()">تخمين الرقم 🔢</button>
-  <button onclick="ramadanRiddle()">فزورة 🧩</button>
+<div id="levelBox"></div>
 </div>
 
 <nav>
-  <button onclick="showPage('home')">الرئيسية</button>
-  <button onclick="showPage('games')">الألعاب</button>
+<button onclick="showPage('home')">الرئيسية</button>
+<button onclick="showPage('games')">الألعاب</button>
 </nav>
 
+<div class="effects" id="effects"></div>
+
 <script>
-// تغيير الصفحات
 function showPage(id){
-  document.getElementById('home').style.display='none';
-  document.getElementById('games').style.display='none';
-  document.getElementById(id).style.display='block';
+document.getElementById("home").style.display="none";
+document.getElementById("games").style.display="none";
+document.getElementById(id).style.display="block";
 }
 
-// مؤثر النجوم
-function stars(){
-  for(let i=0;i<20;i++){
-    const s=document.createElement("div");
-    s.innerText="✨";
-    s.style.position="fixed";
-    s.style.left=Math.random()*100+"vw";
-    s.style.top=Math.random()*100+"vh";
-    s.style.fontSize="20px";
-    document.body.appendChild(s);
-    setTimeout(()=>s.remove(),1000);
-  }
+function showEffect(){
+const box=document.getElementById("effects");
+for(let i=0;i<20;i++){
+const s=document.createElement("span");
+s.innerText=Math.random()>0.5?"💜":"🌙";
+s.style.left=Math.random()*100+"vw";
+box.appendChild(s);
+setTimeout(()=>s.remove(),3000);
+}
 }
 
-// ================= لعبة المراحل =================
-let level=0;
-let score=0;
+/* سؤال رمضاني */
+function ramadanQuestion(){
+const q=[
+["في أي شهر نزل القرآن؟","رمضان"],
+["كم عدد أركان الإسلام؟","5"]
+];
+const r=q[Math.floor(Math.random()*q.length)];
+const a=prompt(r[0]);
+if(a===r[1]){alert("صح 🌙");showEffect();}
+else alert("غلط");
+}
 
-const levels=[
-  {q:"في أي شهر نزل القرآن؟",a:"رمضان"},
-  {q:"كم عدد أركان الإسلام؟",a:"5"},
-  {q:"ما هي ليلة خير من ألف شهر؟",a:"القدر"}
+/* خمن الرقم */
+function guessNumber(){
+const n=Math.floor(Math.random()*5)+1;
+const g=prompt("خمن رقم من 1 إلى 5");
+if(Number(g)===n){alert("مبروك 💜");showEffect();}
+else alert("كان الرقم "+n);
+}
+
+/* فزورة */
+function riddle(){
+const a=prompt("شيء يظهر ليلًا ويختفي نهارًا؟");
+if(a==="القمر"){alert("صح 🌙");showEffect();}
+else alert("الإجابة: القمر");
+}
+
+/* لعبة المراحل */
+let level=1,points=0,time=10,timer;
+
+const questions=[
+["كم عدد أيام رمضان غالبًا؟","30"],
+["ما الليلة خير من ألف شهر؟","ليلة القدر"],
+["كم عدد ركعات التراويح المشهورة؟","20"]
 ];
 
 function startLevels(){
-  level=0;
-  score=0;
-  playLevel();
+level=1;points=0;nextLevel();
 }
 
-function playLevel(){
-  if(level>=levels.length){
-    alert("مبروك خلصت كل المراحل 🏆 مجموع نقاطك: "+score);
-    stars();
-    return;
-  }
+function nextLevel(){
+clearInterval(timer);
 
-  const answer=prompt(levels[level].q);
-
-  if(answer===levels[level].a){
-    score++;
-    stars();
-    alert("صح 👍");
-    level++;
-    playLevel();
-  }else{
-    alert("غلط ❌ حاول تاني");
-  }
+if(level>questions.length){
+document.getElementById("levelBox").innerHTML=
+`<h2>مبروك يا ولاء 💜</h2>
+<p>نقاطك: ${points}</p>`;
+showEffect();
+return;
 }
 
-// ================= أسئلة عشوائية =================
-const randomQuestions=[
-  {q:"كم عدد أيام شهر رمضان؟",a:"30"},
-  {q:"ما اسم صلاة الليل في رمضان؟",a:"التراويح"}
-];
+time=10;
 
-function newQuestion(){
-  const r=randomQuestions[Math.floor(Math.random()*randomQuestions.length)];
-  const user=prompt(r.q);
+document.getElementById("levelBox").innerHTML=
+`<p>المستوى ${level}</p>
+<p>النقاط ${points}</p>
+<p id="timer">الوقت: ${time}</p>
+<p>${questions[level-1][0]}</p>
+<input id="ans">
+<br><button onclick="checkAnswer()">تأكيد</button>`;
 
-  if(user===r.a){
-    alert("إجابة صحيحة 🌙");
-    stars();
-  }else{
-    alert("إجابة خاطئة");
-  }
+timer=setInterval(()=>{
+time--;
+document.getElementById("timer").innerText="الوقت: "+time;
+if(time<=0){clearInterval(timer);alert("انتهى الوقت");level++;nextLevel();}
+},1000);
 }
 
-// ================= تخمين الرقم =================
-function guessNumber(){
-  const num=Math.floor(Math.random()*5)+1;
-  const g=prompt("خمن رقم من 1 إلى 5");
-
-  if(parseInt(g)===num){
-    alert("مبروك 🎉");
-    stars();
-  }else{
-    alert("كان الرقم "+num);
-  }
+function checkAnswer(){
+const val=document.getElementById("ans").value;
+if(val===questions[level-1][1]){
+points+=10;
+showEffect();
 }
-
-// ================= الفوازير =================
-const riddles=[
-  {q:"شيء يظهر ليلًا ويختفي نهارًا؟",a:"القمر"},
-  {q:"بيت بلا أبواب ولا نوافذ؟",a:"البيض"}
-];
-
-function ramadanRiddle(){
-  const r=riddles[Math.floor(Math.random()*riddles.length)];
-  const ans=prompt(r.q);
-
-  if(ans===r.a){
-    alert("إجابة صحيحة ✨");
-    stars();
-  }else{
-    alert("الحل: "+r.a);
-  }
+level++;
+nextLevel();
 }
 </script>
 
