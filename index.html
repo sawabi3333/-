@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تهنئة رمضان كريم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      padding: 20px;
+      padding-bottom: 90px;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      padding: 25px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      max-width: 420px;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: #ffd700;
+      line-height: 1.4;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    button {
+      background: #ffd700;
+      color: #000;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      margin: 5px;
+      width: 100%;
+      max-width: 220px;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: #ffea00;
+    }
+
+    .moon {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: #ffd700;
+      border-radius: 50%;
+      box-shadow: -12px 0 0 8px #0f2027;
+    }
+
+    @media (max-width: 500px) {
+      h1 { font-size: 1.6rem; }
+      p { font-size: 1rem; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="moon"></div>
+
+  <div class="card" id="home">
+    <h1>رمضان كريم يا ولاء مصطفى 🌙</h1>
+    <p>
+      كل عام وأنتِ بخير يا ولاء، نسأل الله أن يملأ قلبكِ بالسكينة
+      وأن يبارك لكِ في هذا الشهر الفضيل.
+    </p>
+    <button onclick="showMessage()">اضغط للتهنئة</button>
+  </div>
+
+  <div class="card" id="games" style="display:none;">
+    <h1>🎮 ألعاب رمضانية</h1>
+    <button onclick="newQuestion()">سؤال رمضاني</button>
+    <button onclick="guessNumber()">تخمين الرقم</button>
+    <button onclick="ramadanRiddle()">فزورة</button>
+  </div>
+
+  <nav style="position:fixed;bottom:0;left:0;width:100%;background:rgba(0,0,0,0.6);display:flex;justify-content:space-around;padding:12px;backdrop-filter:blur(10px);z-index:5;">
+    <button onclick="showPage('home')">الرئيسية</button>
+    <button onclick="showPage('games')">الألعاب</button>
+  </nav>
+
+  <script>
+    function showPage(id) {
+      document.getElementById('home').style.display = 'none';
+      document.getElementById('games').style.display = 'none';
+      document.getElementById(id).style.display = 'block';
+    }
+
+    function showMessage() {
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100%';
+      overlay.style.height = '100%';
+      overlay.style.background = 'rgba(0,0,0,0.6)';
+      overlay.style.display = 'flex';
+      overlay.style.alignItems = 'center';
+      overlay.style.justifyContent = 'center';
+      overlay.style.zIndex = '9999';
+
+      const card = document.createElement('div');
+      card.style.background = '#fff';
+      card.style.color = '#000';
+      card.style.padding = '30px';
+      card.style.borderRadius = '20px';
+      card.style.textAlign = 'center';
+      card.style.maxWidth = '300px';
+
+      const text = document.createElement('p');
+      text.innerText = 'تقبل الله منا ومنكم صالح الأعمال 🌙✨
+أول رمضان مع بعض وبإذن الله لآخر العمر 💜💜';
+
+      const closeBtn = document.createElement('button');
+      closeBtn.innerText = 'إغلاق';
+      closeBtn.style.marginTop = '15px';
+      closeBtn.onclick = () => document.body.removeChild(overlay);
+
+      for (let i = 0; i < 25; i++) {
+        const star = document.createElement('div');
+        star.innerText = i % 2 === 0 ? '💜' : '✨';
+        star.style.position = 'fixed';
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.top = Math.random() * 100 + 'vh';
+        star.style.fontSize = '22px';
+        overlay.appendChild(star);
+      }
+
+      card.appendChild(text);
+      card.appendChild(closeBtn);
+      overlay.appendChild(card);
+      document.body.appendChild(overlay);
+    }
+
+    const questions = [
+      { q: 'في أي شهر نزل القرآن؟', a: 'رمضان' },
+      { q: 'كم عدد أركان الإسلام؟', a: '5' }
+    ];
+
+    function newQuestion() {
+      const random = questions[Math.floor(Math.random() * questions.length)];
+      const userAnswer = prompt(random.q);
+      if (userAnswer === random.a) alert('صح 🌙');
+      else alert('غلط');
+    }
+
+    function guessNumber() {
+      const number = Math.floor(Math.random() * 5) + 1;
+      const guess = prompt('خمن رقم من 1 إلى 5');
+      if (parseInt(guess) === number) alert('مبروك 🎉');
+      else alert('كان الرقم ' + number);
+    }
+
+    let score = 0;
+    const riddles = [
+      { q: 'شيء يظهر ليلًا ويختفي نهارًا؟', a: 'القمر' }
+    ];
+
+    function ramadanRiddle() {
+      const r = riddles[0];
+      const answer = prompt(r.q);
+      if (answer === r.a) {
+        score++;
+        alert('إجابة صحيحة يا ولاء ✨');
+      } else {
+        alert('الحل: ' + r.a);
+      }
+    }
+  document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.querySelector('#home button');
+      if (btn) {
+        btn.addEventListener('click', showMessage);
+      }
+    });
+  </script>
+
+</body>
+</html>
