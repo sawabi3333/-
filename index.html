@@ -29,12 +29,6 @@ text-align:center;
 max-width:420px;
 width:90%;
 box-shadow:0 20px 50px rgba(0,0,0,0.7);
-animation:fadeIn .7s ease;
-}
-
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(40px) scale(.9)}
-to{opacity:1;transform:translateY(0) scale(1)}
 }
 
 h1{color:#ffd700;margin-bottom:10px}
@@ -50,7 +44,6 @@ font-weight:bold;
 cursor:pointer;
 color:#fff;
 box-shadow:0 6px 0 #4b0fb3,0 12px 20px rgba(0,0,0,.5);
-transition:.15s;
 }
 
 button:active{
@@ -66,7 +59,6 @@ background:#0b1622ee;
 display:flex;
 justify-content:space-around;
 padding:12px;
-backdrop-filter:blur(10px);
 }
 
 .effects span{
@@ -76,8 +68,8 @@ animation:fall 3s linear forwards;
 }
 
 @keyframes fall{
-from{transform:translateY(-50px) scale(.7);opacity:1}
-to{transform:translateY(100vh) scale(1.2);opacity:0}
+from{transform:translateY(-50px);opacity:1}
+to{transform:translateY(100vh);opacity:0}
 }
 
 .progress{
@@ -90,16 +82,14 @@ overflow:hidden;
 .progress div{
 height:100%;
 background:linear-gradient(90deg,#b46bff,#ffd700);
-width:0%;
-transition:.4s;
 }
-
 .timer{font-size:.9rem;opacity:.8}
 </style>
 </head>
 
 <body>
 
+<!-- الرئيسية -->
 <div class="card" id="home">
 <h1>رمضان كريم يا ولاء 💜🌙</h1>
 <p>تقبل الله منا ومنكم صالح الأعمال  
@@ -107,6 +97,7 @@ transition:.4s;
 <button onclick="showEffect()">اضغطي للفرحة</button>
 </div>
 
+<!-- الألعاب -->
 <div class="card" id="games" style="display:none">
 <h1>ألعاب رمضان 🎮</h1>
 
@@ -126,6 +117,7 @@ transition:.4s;
 <div class="effects" id="effects"></div>
 
 <script>
+/* تنقل الصفحات */
 function showPage(id){
 ["home","games"].forEach(p=>{
 document.getElementById(p).style.display="none";
@@ -133,6 +125,7 @@ document.getElementById(p).style.display="none";
 document.getElementById(id).style.display="block";
 }
 
+/* مؤثرات */
 function showEffect(){
 const box=document.getElementById("effects");
 for(let i=0;i<25;i++){
@@ -144,29 +137,57 @@ setTimeout(()=>s.remove(),3000);
 }
 }
 
+/* رسالة الفوز */
 function winMessage(){
 alert("🎉 إجابة صحيحة يا ولاء 💜");
 showEffect();
 }
 
-/* لعبة المراحل بعد زيادة الأسئلة */
+/* ===== الألعاب الصغيرة ===== */
+
+/* سؤال رمضاني */
+function ramadanQuestion(){
+const qs=[
+["في أي شهر نزل القرآن؟","رمضان"],
+["كم عدد أركان الإسلام؟","5"]
+];
+const r=qs[Math.floor(Math.random()*qs.length)];
+const a=prompt(r[0]);
+if(a===r[1]) winMessage();
+else alert("إجابة خاطئة");
+}
+
+/* خمن الرقم */
+function guessNumber(){
+const n=Math.floor(Math.random()*5)+1;
+const g=prompt("خمن رقم من 1 إلى 5");
+if(Number(g)===n) winMessage();
+else alert("كان الرقم "+n);
+}
+
+/* فزورة */
+function riddle(){
+const a=prompt("شيء يظهر ليلًا ويختفي نهارًا؟");
+if(a==="القمر") winMessage();
+else alert("الإجابة: القمر");
+}
+
+/* ===== لعبة المراحل ===== */
+
 let level=1,points=0,time=20,timer;
 
 const questions=[
 ["كم عدد أيام رمضان غالبًا؟","30"],
 ["ما الليلة خير من ألف شهر؟","ليلة القدر"],
 ["كم عدد ركعات التراويح المشهورة؟","20"],
-["في أي شهر هجري يأتي رمضان؟","التاسع"],
 ["ما اسم السورة التي ذكر فيها رمضان؟","البقرة"],
-["كم عدد أركان الإسلام؟","5"],
-["ما أول ما نزل من القرآن؟","اقرأ"],
-["كم عدد الصلوات المفروضة؟","5"],
-["ما اسم ليلة نزول القرآن؟","ليلة القدر"],
-["ما العبادة الأساسية في رمضان؟","الصيام"]
+["ما أول ما نزل من القرآن؟","اقرأ"]
 ];
 
 function startLevels(){
-level=1;points=0;nextLevel();
+level=1;
+points=0;
+nextLevel();
 }
 
 function nextLevel(){
@@ -174,8 +195,7 @@ clearInterval(timer);
 
 if(level>questions.length){
 document.getElementById("levelBox").innerHTML=
-`<h2>🎉 مبروك يا ولاء</h2>
-<p>نقاطك: ${points}</p>`;
+`<h2>🎉 مبروك يا ولاء</h2><p>نقاطك: ${points}</p>`;
 showEffect();
 return;
 }
