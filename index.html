@@ -155,13 +155,31 @@
         const el = document.getElementById(p);
         if (!el) return;
 
-        el.style.transition = 'all 0.4s ease';
+        el.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
+        el.style.transformOrigin = 'center';
+        el.style.transform = 'perspective(800px) rotateY(70deg) scale(0.8)';
         el.style.opacity = '0';
-        el.style.transform = 'translateY(20px) scale(0.98)';
 
         setTimeout(() => {
           el.style.display = 'none';
-        }, 200);
+        }, 300);
+      });
+
+      const target = document.getElementById(id);
+
+      setTimeout(() => {
+        target.style.display = 'block';
+        target.style.transformOrigin = 'center';
+        target.style.transform = 'perspective(800px) rotateY(-70deg) scale(0.8)';
+        target.style.opacity = '0';
+
+        setTimeout(() => {
+          target.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
+          target.style.transform = 'perspective(800px) rotateY(0deg) scale(1)';
+          target.style.opacity = '1';
+        }, 50);
+      }, 320);
+    }, 200);
       });
 
       const target = document.getElementById(id);
